@@ -1,0 +1,11 @@
+.bright {
+    color: green;
+    font-weight: bold;
+}
+
+.document {
+    border: 1px solid #e2e2e2;
+    "& .react-pdf__Page__canvas": {
+        
+    }
+}
