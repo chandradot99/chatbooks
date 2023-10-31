@@ -2,7 +2,7 @@ class CsvService
 	def initialize
 	end
 
-	def create_pages_csv(pages, csv_name)
+	def create_pages_csv(pages, csv_name="book.pdf.pages")
 		csv_path = Rails.root.join("public", "csvs", "#{csv_name}.csv")
 
 		CSV.open(csv_path, 'w') do |csv|
@@ -13,7 +13,7 @@ class CsvService
 		end
 	end
 
-	def create_embeddings_csv(embeddings_hash, csv_name)
+	def create_embeddings_csv(embeddings_hash, csv_name="book.pdf.embeddings")
 		csv_path = Rails.root.join("public", "embeddings", "#{csv_name}_embedding.csv")
 
     CSV.open(csv_path, "wb") do |csv|
