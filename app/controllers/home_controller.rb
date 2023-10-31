@@ -17,7 +17,7 @@ class HomeController < ApplicationController
     chunks = pdfService.split_into_chunks(text)
 
 
-    embeddingService = EmbeddingsService.new(chunks.first(5))
+    embeddingService = EmbeddingsService.new(chunks)
     embeddings_hash = embeddingService.create_embeddings
 
     csvService = CsvService.new

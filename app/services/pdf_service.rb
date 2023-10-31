@@ -25,19 +25,8 @@ class PdfService
     text.gsub(/\n/, '')
 	end
 
-	# Splits the input text into chunks using Langchain::Chunker::RecursiveText.
-	# 
-	# Args:
-	#   text (String): The input text to be split into chunks.
-	#
-	# Returns:
-	#   Array: An array of chunks after processing the input text
   def split_into_chunks(text)
-		# Get chunks from Langchain::Chunker::RecursiveText.new(text).chunks
 		chunks = Langchain::Chunker::RecursiveText.new(text).chunks
-
-		# Map the response to return only the :text part of each chunk
-		# The response format is assumed to be {:cursor, :text}
 		chunks.map { |chunk| chunk[:text] }
   end
 end
