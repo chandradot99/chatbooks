@@ -72,3 +72,4 @@ gem  'ruby-openai'
 gem 'dotenv-rails', groups: [:development, :test]
 gem "pinecone", "~> 0.1.6"
 gem 'rufus-scheduler'
+gem 'pg'

@@ -209,6 +209,7 @@ GEM
       hashery (~> 2.0)
       ruby-rc4
       ttfunk
+    pg (1.5.4)
     pinecone (0.1.71)
       dry-struct (~> 1.6.0)
       dry-validation (~> 1.10.0)
@@ -330,6 +331,7 @@ DEPENDENCIES
   jbuilder
   langchainrb (~> 0.6.17)
   pdf-reader
+  pg
   pinecone (~> 0.1.6)
   puma (~> 5.0)
   rails (~> 7.0.8)
