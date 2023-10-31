@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import { Chat } from '@mui/icons-material';
-
+import Markdown from 'markdown-to-jsx'
 
 const useStyles = makeStyles(() => ({
     response: {
@@ -14,7 +14,13 @@ const useStyles = makeStyles(() => ({
         border: "1px solid #e8eaed"
     },
     text: {
-        fontSize: "15px"
+        fontSize: "15px",
+        "& > :first-child": {
+            marginTop: 0
+        },
+        "& > :last-child": {
+            marginBottom: 0
+        }
     }
 }));
 
@@ -24,9 +30,9 @@ const ChatResponse = ({ response }) => {
   return (
     <div className={classes.response}>
         <Chat htmlColor='#8f1752' />
-        <span className={classes.text}>
+        <Markdown className={classes.text}>
             {response}
-        </span>
+        </Markdown>
     </div>
   );
 };
