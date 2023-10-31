@@ -94,6 +94,9 @@ GEM
       irb (>= 1.5.0)
       reline (>= 0.3.1)
     dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     dry-configurable (1.1.0)
       dry-core (~> 1.0, < 2)
       zeitwerk (~> 2.6)
@@ -318,7 +321,7 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
-  dotenv
+  dotenv-rails
   jbuilder
   langchainrb (~> 0.6.17)
   pdf-reader

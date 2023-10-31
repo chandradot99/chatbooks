@@ -69,6 +69,6 @@ gem 'pdf-reader'
 
 gem "langchainrb", "~> 0.6.17"
 gem  'ruby-openai'
-gem 'dotenv'
+gem 'dotenv-rails', groups: [:development, :test]
 gem "pinecone", "~> 0.1.6"
 gem 'rufus-scheduler'

@@ -1,6 +1,9 @@
 class EmbeddingsService
 	def initialize(texts)
-		@openai = OpenAI::Client.new(access_token: "")
+		api_key = ENV['OPENAI_API_KEY']
+    raise 'API key not found in environment variables' unless api_key
+
+		@openai = OpenAI::Client.new(access_token: api_key)
 		@texts = texts
 	end
 

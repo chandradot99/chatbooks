@@ -23,9 +23,6 @@ class HomeController < ApplicationController
     csvService = CsvService.new
     csvService.create_embeddings_csv(embeddings_hash, uploaded_file.original_filename)
 
-    # pages = pdfService.create_pages_hash
-    # csvService.create_csv
-
     render json: { message: "Success" }, status: :ok
   end
 
