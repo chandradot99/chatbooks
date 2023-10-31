@@ -1,36 +1,26 @@
 class EmbeddingsService
-	def initialize(documents)
-		@openai = OpenAI::Client.new(access_token: "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")
-		@documents = documents
+	def initialize(texts)
+		@openai = OpenAI::Client.new(access_token: "")
+		@texts = texts
 	end
 
 	def create_embeddings
-		# This array is used to store the embeddings
-		# embeddings_array = []
+		response = @openai.embeddings(
+			parameters: {
+				model: "text-embedding-ada-002",
+				input: @texts
+			}
+		)
 
-		# Loop through each element of the array
-		@documents.each do |document|
-			# Pass the text to the embeddings API which will return a vector and
-			# store in the response variable.
-			response = @openai.embeddings(
-				parameters: {
-					model: "text-embedding-ada-002",
-					input: document[:text]
-				}
-			)
+		embeddings_data = response['data']
+    embeddings_hash = {}
 
-			puts response['data'][0]
-			
-			# Extract the embedding from the response object
-			# embedding = response['data'][0]['embedding']
+    embeddings_data.each_with_index do |data, index|
+      text = @texts[index]
+      embedding = data['embedding']
+      embeddings_hash[text] = embedding
+    end
 
-			# Create a Ruby hash containing the vector and the original text
-			# embedding_hash = {embedding: embedding, text: document[:text]}
-			# Store the hash in an array.
-			# embeddings_array << embedding_hash
-		end
-
-		# puts embeddings_array
-		# embeddings_array
+    embeddings_hash
 	end
 end
