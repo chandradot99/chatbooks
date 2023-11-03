@@ -49,7 +49,7 @@ const Home = () => {
           pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
+          theme: "light"
         });
 
         if (data.success) {

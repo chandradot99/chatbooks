@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
 		display: "flex",
 		justifyContent: "center",
     margin: "16px",
-    height: "calc(100% - 90px)",
+    height: "calc(100% - 170px)",
 		overflow: "auto",
 	},
   document: {
