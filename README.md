@@ -1,24 +1,21 @@
-# README
+# Steps for Local Setup
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. **Clone Repository:**
+   ```bash
+   git clone git@github.com:chandradot99/chatbooks.git
 
-Things you may want to cover:
+2. **Install Ruby Gems:**
+   ```bash
+   bundle install
 
-* Ruby version
+3. **Install Node Packages:**
+   ```bash
+   yarn
 
-* System dependencies
+4. **Build UI Components:**
+   ```bash
+   bin/shakapacker-dev-server
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+5. **Run Rails Server:**
+   ```bash
+   bundle exec rails s -p 3000
