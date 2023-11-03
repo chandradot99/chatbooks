@@ -23,7 +23,7 @@ const useStyles = makeStyles(() => ({
 		}
 }));
 
-const ChatWindow = ({ isUserUploadedFile }) => {
+const ChatWindow = ({ isUserUploadedFile, isNewFileUploaded }) => {
   const classes = useStyles();
   const [chatHistory, setChatHistory] = React.useState([]);
 	const [loading, setLoading] = React.useState(false);
@@ -68,20 +68,26 @@ const ChatWindow = ({ isUserUploadedFile }) => {
 		}
 	}, [chatHistory]);
 
+	React.useEffect(() => {
+		if (isNewFileUploaded) {
+			setChatHistory([]);
+		}
+	}, [isNewFileUploaded]);
+
   return (
     <div className={classes.chatWindow}>
 			<div className={classes.chatsWrap} ref={containerRef}>
-			{
-            chatHistory.map(({ type, content }, index) => {
-                return (
-                    <div key={type + index}>
-                        {
-                            type === "User" ? <ChatQuestion question={content} /> : <ChatResponse response={content} />
-                        }
-                    </div>
-                );
-            })
-        }
+				{
+					chatHistory.map(({ type, content }, index) => {
+						return (
+							<div key={type + index}>
+								{
+									type === "User" ? <ChatQuestion question={content} /> : <ChatResponse response={content} />
+								}
+							</div>
+						);
+					})
+				}
 				{
 					loading && <ChatLoading />
 				}
@@ -94,7 +100,7 @@ const ChatWindow = ({ isUserUploadedFile }) => {
 
 ChatWindow.propTypes = {
   isUserUploadedFile: PropTypes.bool.isRequired,
-  onFileUpload: PropTypes.func.isRequired
+	isNewFileUploaded: PropTypes.bool.isRequired
 };
 
 

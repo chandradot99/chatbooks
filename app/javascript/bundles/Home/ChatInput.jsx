@@ -21,7 +21,7 @@ const useStyles = makeStyles(() => ({
 
 const ChatInput = ({ onSend }) => {
   const classes = useStyles();
-  const [userInput, setUserInput] = React.useState("What is this book about?");
+  const [userInput, setUserInput] = React.useState("What is this pdf about?");
 
   return (
     <div className={classes.chatInput}>

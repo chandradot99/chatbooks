@@ -14,9 +14,8 @@ const useStyles = makeStyles(() => ({
 	documentWrap: {
 		display: "flex",
 		justifyContent: "center",
-		marginTop: "16px",
-		marginBottom: "16px",
-    height: "calc(100% - 100px)",
+    margin: "16px",
+    height: "calc(100% - 90px)",
 		overflow: "auto",
 	},
   document: {
@@ -35,7 +34,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-const PDFViewer = ({ file, onFileUpload }) => {
+const PDFViewer = ({ file, onFileUpload, loading }) => {
   const classes = useStyles();
 	const [totalPages, setTotalPages] = React.useState(null);
 
@@ -45,8 +44,7 @@ const PDFViewer = ({ file, onFileUpload }) => {
 
   return (
     <div className={classes.pdfRoot}>
-      <FileUpload onFileUpload={onFileUpload} />
-
+      <FileUpload onFileUpload={onFileUpload} loading={loading} />
 			{file && (
         <div className={classes.documentWrap}>
           <Document file={file} className={classes.document} onLoadSuccess={onDocumentSuccess}>
@@ -62,7 +60,8 @@ const PDFViewer = ({ file, onFileUpload }) => {
 
 PDFViewer.propTypes = {
   file: PropTypes.object,
-  onFileUpload: PropTypes.func.isRequired
+  onFileUpload: PropTypes.func.isRequired,
+  loading: PropTypes.bool
 };
 
 export default PDFViewer;

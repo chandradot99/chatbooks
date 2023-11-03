@@ -3,9 +3,10 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import Sidebar from './FileUpload';
 import PDFViewer from './PDFViewer';
 import ChatWindow from './ChatWindow';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './styles.css'; // Import the CSS file
 
 const useStyles = makeStyles(() => ({
@@ -22,11 +23,16 @@ const Home = () => {
 
   const [file, setFile] = React.useState(null);
   const [isUserUploadedFile, setIsUserUploadedFile] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
+  const [isNewFileUploaded, setIsNewFileUploaded] = React.useState(false);
 
   const savePDF = (file) => {
+    setLoading(true);
+    setIsNewFileUploaded(false);
     // Upload the file to the server
     const formData = new FormData();
     formData.append('file', file);
+
 
     fetch('/upload_file', {
       method: 'POST',
@@ -34,10 +40,27 @@ const Home = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message); // Log the response from the server
+        setLoading(false);
+        toast.success(data.message, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+
+        if (data.success) {
+          setFile(file);
+          setIsUserUploadedFile(true);
+          setIsNewFileUploaded(true);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
+        setLoading(false);
       });
   };
 
@@ -49,8 +72,9 @@ const Home = () => {
     fetch('/fetch_file')
       .then(response => response.blob())
       .then(blob => {
-        const file = new File([blob], 'pdfFileName.pdf', { type: 'application/pdf' });
+        let file = new File([blob], 'user_book.pdf', { type: 'application/pdf' });
         setFile(file);
+        file = null;
       })
       .catch(error => {
         console.error('Error fetching PDF:', error);
@@ -61,20 +85,16 @@ const Home = () => {
     <div className={classes.root}>
       <PDFViewer
         file={file}
-        onFileUpload={() => {
-          setFile(file);
-          setIsUserUploadedFile(true);
+        onFileUpload={(file) => {
           savePDF(file);
         }}
+        loading={loading}
       />
       <ChatWindow
-        onFileUpload={() => {
-          setFile(file);
-          setIsUserUploadedFile(true);
-          savePDF(file);
-        }}
         isUserUploadedFile={isUserUploadedFile}
+        isNewFileUploaded={isNewFileUploaded}
       />
+      <ToastContainer />
     </div>
   );
 };

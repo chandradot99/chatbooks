@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-on-rails": "13.4.0",
     "react-pdf": "^7.5.0",
+    "react-toastify": "^9.1.3",
     "shakapacker": "7.0.0",
     "style-loader": "^3.3.3",
     "terser-webpack-plugin": "5",

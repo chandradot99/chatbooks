@@ -7,26 +7,32 @@ class EmbeddingsService
 	end
 
 	def create_embeddings_from_pdf_chunks(chunks)
-		response = @openai.embeddings(
-			parameters: {
-				model: "text-embedding-ada-002",
-				input: chunks
-			}
-		)
+    begin
+      response = @openai.embeddings(
+        parameters: {
+          model: "text-embedding-ada-002",
+          input: chunks
+        }
+      )
 
-		embeddings_data = response['data']
-    embeddings_hash = {}
-
-    puts "data"
-    puts response
-
-    embeddings_data.each_with_index do |data, index|
-      text = chunks[index]
-      embedding = data['embedding']
-      embeddings_hash[text] = embedding
+      if response["error"]
+        raise StandardError, response["error"]["message"]
+      else
+        embeddings_data = response['data']
+        embeddings_hash = {}
+    
+        embeddings_data.each_with_index do |data, index|
+          text = chunks[index]
+          embedding = data['embedding']
+          embeddings_hash[text] = embedding
+        end
+    
+        { success: true, embeddings_hash: embeddings_hash }
+      end
+    rescue StandardError => e
+      puts e.message
+      {  success: false, message: e.message }
     end
-
-    embeddings_hash
 	end
 
 	def create_user_input_embedding(user_input)

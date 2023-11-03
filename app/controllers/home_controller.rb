@@ -11,18 +11,24 @@ class HomeController < ApplicationController
   def upload_pdf
     uploaded_file = params[:file]
 
+    puts uploaded_file.original_filename
+
     pdfService = PdfService.new(uploaded_file)
 
     text = pdfService.extract_text_from_pdf
     chunks = pdfService.split_into_chunks(text)
 
     embeddingService = EmbeddingsService.new
-    embeddings_hash = embeddingService.create_embeddings_from_pdf_chunks(chunks)
+    response = embeddingService.create_embeddings_from_pdf_chunks(chunks)
 
-    csvService = CsvService.new
-    csvService.create_embeddings_csv(embeddings_hash)
-
-    render json: { message: "PDF file uploaded and Embeddings Created Successfully" }, status: :ok
+    if response[:success]
+      csvService = CsvService.new
+      csvService.create_embeddings_csv(response[:embeddings_hash])
+  
+      render json: { success: true, message: "PDF file uploaded and Embeddings Created Successfully" }, status: :ok
+    else
+      render json: { success: false, message: response[:message] }, status: :ok
+    end
   end
 
 

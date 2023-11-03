@@ -6,6 +6,7 @@ import { makeStyles } from '@mui/styles';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { CloudUpload } from '@mui/icons-material';
+import LoadingDots from './LoadingDots';
 
 const VisuallyHiddenInput = styled('input')({
 	clip: 'rect(0 0 0 0)',
@@ -25,21 +26,28 @@ const useStyles = makeStyles(() => ({
     top: 0,
     left: 0,
     borderBottom: "1px solid #e2e2e2",
-    height: "70px",
+    height: "90px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
     padding: "16px 0"
 	},
   label: {
     marginBottom: "8px"
   },
   button: {
-    width: "200px"
+    width: "260px"
+  },
+  infoMessage: {
+    color: "red",
+    width: "500px",
+    fontSize: "12px",
+    marginTop: "8px"
   }
 }));
 
-const FileUpload = ({ onFileUpload }) => {
+const FileUpload = ({ onFileUpload, loading }) => {
   const classes = useStyles();
 
   const onFileChange = (event) => {
@@ -52,16 +60,31 @@ const FileUpload = ({ onFileUpload }) => {
       <div className={classes.label}>
         Chat with below PDF or Upload new PDF to start Chatting.
       </div>
-      <Button component="label" variant="contained" startIcon={<CloudUpload />} className={classes.button} >
-        Upload PDF
+      <Button component="label" variant="contained" startIcon={<CloudUpload />} className={classes.button} disabled={loading} >
+        {
+          loading ? (
+            <>
+              <span>Uploading PDF</span>
+              <LoadingDots />
+            </>
+          ) : (
+            <span>Upload PDF</span>
+          )
+        }
         <VisuallyHiddenInput type="file" onChange={onFileChange} />
       </Button>
+      <div className={classes.infoMessage}>
+        Note: 
+        1. Larger PDFs might not work, try to upload pdf with max 200 pages. <br />
+        2. OpenAI has token limit per minute for embeddings, so please wait for 1 minute before next upload
+      </div>
     </div>
   );
 };
 
 FileUpload.propTypes = {
-    onFileUpload: PropTypes.func.isRequired
+  onFileUpload: PropTypes.func.isRequired,
+  loading: PropTypes.bool,
 };
 
 export default FileUpload;
