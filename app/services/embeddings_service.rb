@@ -17,6 +17,9 @@ class EmbeddingsService
 		embeddings_data = response['data']
     embeddings_hash = {}
 
+    puts "data"
+    puts response
+
     embeddings_data.each_with_index do |data, index|
       text = chunks[index]
       embedding = data['embedding']

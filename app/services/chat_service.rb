@@ -58,7 +58,6 @@ class ChatService
 		prompt = "
 			You are a chatbot and you will give responses to user questions based on only the context section
 			[context] #{context}
-			If the question is outside from context, you should ignore it and display following message: I can only answer your question if you ask questions related to this book, Let's try again.
 		"
     chat = Langchain::Conversation.new(llm: @llm)
     chat.set_context(prompt)

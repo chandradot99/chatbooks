@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import ChatInput from './ChatInput';
@@ -7,10 +8,10 @@ import ChatLoading from './ChatLoading';
 
 const useStyles = makeStyles(() => ({
     chatWindow: {
-        width: "40%",
-        position: "relative",
-				display: "flex",
-				flexDirection: "column",
+      width: "50%",
+      position: "relative",
+      display: "flex",
+      flexDirection: "column"
     },
 		chatsWrap: {
 			height: "calc(100% - 60px)",
@@ -22,7 +23,7 @@ const useStyles = makeStyles(() => ({
 		}
 }));
 
-const ChatWindow = () => {
+const ChatWindow = ({ isUserUploadedFile }) => {
   const classes = useStyles();
   const [chatHistory, setChatHistory] = React.useState([]);
 	const [loading, setLoading] = React.useState(false);
@@ -34,7 +35,8 @@ const ChatWindow = () => {
     setChatHistory(history);
 
     const requestBody = {
-      question: userInput
+      question: userInput,
+      isSamplePDF: !isUserUploadedFile
     };
 
     fetch('/chat', {
@@ -87,6 +89,12 @@ const ChatWindow = () => {
         <ChatInput onSend={queryChatBot} />
     </div>
   );
+};
+
+
+ChatWindow.propTypes = {
+  isUserUploadedFile: PropTypes.bool.isRequired,
+  onFileUpload: PropTypes.func.isRequired
 };
 
 

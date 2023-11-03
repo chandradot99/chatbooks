@@ -13,8 +13,8 @@ class CsvService
 		end
 	end
 
-	def create_embeddings_csv(embeddings_hash, csv_name="book.pdf.embeddings")
-		csv_path = Rails.root.join("public", "embeddings", "#{csv_name}_embedding.csv")
+	def create_embeddings_csv(embeddings_hash, csv_name="user_book.pdf.embeddings")
+		csv_path = Rails.root.join("public", "embeddings", "#{csv_name}.csv")
 
     CSV.open(csv_path, "wb") do |csv|
 			# Write header row

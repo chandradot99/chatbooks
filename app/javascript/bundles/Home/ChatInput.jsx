@@ -11,7 +11,12 @@ const useStyles = makeStyles(() => ({
 		width: "calc(100% - 32px)",
 		height: "60px",
 		padding: "16px",
-	}
+	},
+  button: {
+    borderTopLeftRadius: "0 !important",
+    borderBottomLeftRadius: "0 !important",
+    marginLeft: "-2px !important"
+  }
 }));
 
 const ChatInput = ({ onSend }) => {
@@ -20,11 +25,28 @@ const ChatInput = ({ onSend }) => {
 
   return (
     <div className={classes.chatInput}>
-			<TextField fullWidth label="Ask Question" id="fullWidth" onChange={(event) => setUserInput(event.target.value)} value={userInput} />
-			<Button component="label" variant="contained" onClick={() =>  {
-				setUserInput("");
-				onSend(userInput);
-			}}>
+			<TextField
+        fullWidth
+        label="Ask Question"
+        id="fullWidth"
+        onChange={(event) => setUserInput(event.target.value)}
+        onKeyUp={(event) => {
+          if (event.key === "Enter") {
+            setUserInput("");
+            onSend(userInput);
+          }
+        }}
+        value={userInput}
+      />
+			<Button
+        component="button"
+        variant="contained"
+        className={classes.button}
+        onClick={() =>  {
+          setUserInput("");
+          onSend(userInput);
+        }}
+      >
 				<Send />
 			</Button>
     </div>

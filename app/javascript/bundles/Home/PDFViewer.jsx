@@ -4,18 +4,20 @@ import { makeStyles } from '@mui/styles';
 import { pdfjs, Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
+import FileUpload from './FileUpload';
 
 const useStyles = makeStyles(() => ({
 	pdfRoot: {
-		width: "40%",
-		overflow: "auto",
-		borderRight: "1px solid #e2e2e2"
+		width: "50%",
+		borderRight: "1px solid #e2e2e2",
 	},
 	documentWrap: {
 		display: "flex",
 		justifyContent: "center",
 		marginTop: "16px",
-		marginBottom: "16px"
+		marginBottom: "16px",
+    height: "calc(100% - 100px)",
+		overflow: "auto",
 	},
   document: {
 		display: "flex",
@@ -33,7 +35,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-const PDFViewer = ({ file }) => {
+const PDFViewer = ({ file, onFileUpload }) => {
   const classes = useStyles();
 	const [totalPages, setTotalPages] = React.useState(null);
 
@@ -43,6 +45,8 @@ const PDFViewer = ({ file }) => {
 
   return (
     <div className={classes.pdfRoot}>
+      <FileUpload onFileUpload={onFileUpload} />
+
 			{file && (
         <div className={classes.documentWrap}>
           <Document file={file} className={classes.document} onLoadSuccess={onDocumentSuccess}>
@@ -57,7 +61,8 @@ const PDFViewer = ({ file }) => {
 };
 
 PDFViewer.propTypes = {
-  file: PropTypes.object
+  file: PropTypes.object,
+  onFileUpload: PropTypes.func.isRequired
 };
 
 export default PDFViewer;

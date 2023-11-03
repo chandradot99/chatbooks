@@ -4,6 +4,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "home#index"
-  post '/upload_file', to: 'home#upload_file'
+  get '/fetch_file', to: "home#fetch_pdf"
+  post '/upload_file', to: 'home#upload_pdf'
   post '/chat', to: 'home#chat'
 end
